@@ -1,0 +1,15 @@
+{
+  "name": "parking_pass",
+  "version": "0.1.0",
+  "description": "WHO THE HELL HAS THE PARKING PASS?!?!",
+  "dependencies": {
+    "jQuery": "~1.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TJ Simons <t.simons88@gmail.com>",
+  "license": "",
+  "private": true
+}
