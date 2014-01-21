@@ -24,7 +24,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Nolan Has The Pass</h1>
+        <h1><span id="currentHolder">Nolan</span> Has The Pass</h1>
       </div>
     </div>
 

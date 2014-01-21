@@ -6,7 +6,7 @@ var ParkingPass = ParkingPass || function () {
         len = options.length;
 
     for (i; i<len; i++) {
-      if (option[i].val() !== name) {
+      if (options[i].value !== name) {
         return name;
       }
     }
@@ -14,29 +14,32 @@ var ParkingPass = ParkingPass || function () {
   };
   
   appendOption = function (name) {
-    if (!checkOption(name)) {
-      $('#previousHolders').append('<option value="' + name + '">');
-    }
+    $('#previousHolders').append('<option value="' + name + '">');
+  };
+
+  updateHolder = function (name) {
+    $('#currentHolder').text(name || "nobody");
   };
 
   return {
     getData: function () {
       $.get('db.php', function(data, status, xhr) {
-        var parsed = JSON.parse(data),
-            current = 'Nobody';
+        var data = data.split('|'),
+            len = data.length,
+            i=0,
+            current = 'nobody';
 
-        for (var key in parsed) { if (parsed.hasOwnProperty(key)) {
-          appendOption(parsed[key].name);
+        for (i; i < len - 1; i++) {
+          var parsed = JSON.parse(data[i]);
+          console.log(parsed);
+          appendOption(parsed.name);
 
-          if (parsed[key].current == 1) {
-            current = parsed[key];
+          if (parsed.current == 1) {
+            current = parsed.name;
           }
-        }}
 
-        return {
-          'data': data,
-          'current': current
-        };
+          updateHolder(current);
+        }
       });
     },
 
@@ -47,7 +50,10 @@ var ParkingPass = ParkingPass || function () {
 
       $.post('dp.php', data, function (returnData, status, xhr) {
         if (returnData.status == "success") {
-          appendOption(postData.name);
+          if (!checkOption(postData.name)) {
+            appendOption(postData.name);
+          }
+          
           self.attempts =  0;
           return true;
         } else {
